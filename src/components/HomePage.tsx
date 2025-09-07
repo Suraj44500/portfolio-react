@@ -11,8 +11,6 @@ import {
 import {
   motion,
   AnimatePresence,
-  useScroll,
-  useTransform,
 } from "framer-motion";
 import type { Variants } from "framer-motion";
 import {
