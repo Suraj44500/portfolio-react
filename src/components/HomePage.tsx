@@ -6,6 +6,7 @@ import {
   IconButton,
   Chip,
   useTheme,
+  alpha,
 } from "@mui/material";
 import {
   motion,
@@ -15,7 +16,6 @@ import {
 } from "framer-motion";
 import type { Variants } from "framer-motion";
 import {
-  KeyboardArrowDown,
   RocketLaunch,
   LinkedIn,
   Email,
@@ -24,7 +24,12 @@ import {
   WhatsApp,
 } from "@mui/icons-material";
 import type { Page } from "../App";
-import { SiReact, SiNextdotjs } from "react-icons/si";
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiJavascript,
+} from "react-icons/si";
 import { MdPhoneIphone } from "react-icons/md";
 
 interface HomePageProps {
@@ -33,17 +38,8 @@ interface HomePageProps {
 
 const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
   const theme = useTheme();
-  const [currentTextIndex] = useState(0);
-  const [isPulsing] = useState(true);
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   const roles = [
     "Frontend Developer",
@@ -54,6 +50,13 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    // Auto-rotate roles text
+    const interval = setInterval(() => {
+      setCurrentTextIndex((prev) => (prev + 1) % roles.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
   }, []);
 
   // Text reveal animation
@@ -65,7 +68,7 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
       transition: {
         delay: i * 0.1,
         duration: 0.8,
-        ease: [0.25, 0.1, 0.25, 1], // cubic-bezier easing
+        ease: [0.25, 0.1, 0.25, 1],
       },
     }),
   };
@@ -87,11 +90,12 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
 
     return (
       <>
-        {[...Array(50)].map((_, i) => {
+        {[...Array(30)].map((_, i) => {
           const initialX = Math.random() * 100;
           const initialY = Math.random() * 100;
           const delay = Math.random() * 5;
           const duration = Math.random() * 20 + 10;
+          const size = Math.random() * 6 + 2;
 
           return (
             <Box
@@ -108,7 +112,7 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
                   `${initialY + mouseY * 20}%`,
                   `${initialY}%`,
                 ],
-                opacity: [0, 0.7, 0],
+                opacity: [0, 0.5, 0],
                 scale: [0, 1, 0],
               }}
               transition={{
@@ -119,10 +123,10 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
               }}
               sx={{
                 position: "absolute",
-                width: 6,
-                height: 6,
+                width: size,
+                height: size,
                 borderRadius: "50%",
-                background: "rgba(255,255,255,0.5)",
+                background: alpha(theme.palette.primary.main, 0.3),
                 top: 0,
                 left: 0,
                 zIndex: 0,
@@ -154,7 +158,7 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
           width: 200,
           height: 200,
           borderRadius: "50%",
-          background: "rgba(255,255,255,0.07)",
+          background: alpha(theme.palette.secondary.main, 0.07),
           zIndex: 0,
         }}
       />
@@ -175,28 +179,7 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
           width: 250,
           height: 250,
           borderRadius: "50%",
-          background: "rgba(255,255,255,0.05)",
-          zIndex: 0,
-        }}
-      />
-      <Box
-        component={motion.div}
-        animate={{
-          rotate: [0, 90, 0],
-          borderRadius: ["20%", "50%", "20%"],
-        }}
-        transition={{
-          duration: 18,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        sx={{
-          position: "absolute",
-          top: "20%",
-          left: "5%",
-          width: 100,
-          height: 100,
-          background: "rgba(255,255,255,0.04)",
+          background: alpha(theme.palette.primary.main, 0.05),
           zIndex: 0,
         }}
       />
@@ -207,18 +190,16 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
     <Box
       ref={containerRef}
       sx={{
-        minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         background:
           theme.palette.mode === "dark"
-            ? "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)"
-            : "linear-gradient(135deg, #E0E7FF 0%, #C7D2FE 30%, #A5B4FC 60%, #C7D2FE 100%)",
+            ? "linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%)"
+            : "linear-gradient(135deg, #f8f9ff 0%, #e6e9ff 30%, #d6dbff 60%, #e6e9ff 100%)",
         position: "relative",
-        overflow: "hidden",
-        color: "white",
+        color: "text.primary",
         textAlign: "center",
         px: 3,
       }}
@@ -228,7 +209,6 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
 
       <Box
         component={motion.div}
-        style={{ y, opacity }}
         sx={{
           position: "relative",
           zIndex: 2,
@@ -237,17 +217,20 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
           mx: "auto",
         }}
       >
+        {/* Profile Image */}
         <Box
           component={motion.div}
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
           sx={{
-            width: 210,
-            height: 210,
+            width: 180,
+            height: 180,
             borderRadius: "50%",
             mx: "auto",
             mb: 4,
-            boxShadow: 6,
-            background:
-              "linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4)",
+            boxShadow: 3,
+            background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
             padding: "4px",
             position: "relative",
             zIndex: 1,
@@ -260,6 +243,7 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
               borderRadius: "50%",
               overflow: "hidden",
               backgroundColor: "white",
+              boxShadow: "inset 0 0 10px rgba(0,0,0,0.1)",
             }}
           >
             <img
@@ -274,7 +258,7 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
           </Box>
         </Box>
 
-        {/* Heading with enhanced animation */}
+        {/* Heading */}
         <Typography
           component={motion.h1}
           variant="h1"
@@ -282,17 +266,17 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           sx={{
-            fontSize: { xs: "2.5rem", md: "4rem" },
+            fontSize: { xs: "2.5rem", md: "3.5rem" },
             fontWeight: 700,
             mb: 1,
-            color: "text.secondary",
+            color: "text.primary",
           }}
         >
           Hello, I'm{" "}
           <Box
             component="span"
             sx={{
-              background: "linear-gradient(45deg, #ff6b6b, #4ecdc4)",
+              background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
               backgroundClip: "text",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
@@ -303,21 +287,20 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
           </Box>
         </Typography>
 
-        {/* Roles with enhanced animation */}
-        <Box sx={{ height: 60, overflow: "hidden", mb: 2 }}>
+        {/* Roles */}
+        <Box sx={{ height: 60, overflow: "hidden", mb: 3 }}>
           <AnimatePresence mode="wait">
             <Typography
               key={currentTextIndex}
               component={motion.p}
-              variant="h4"
+              variant="h5"
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -50, opacity: 0 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
               sx={{
-                fontWeight: 300,
-                fontStyle: "italic",
-                color: "secondary.main",
+                fontWeight: 400,
+                color: "text.secondary",
               }}
             >
               {roles[currentTextIndex]}
@@ -325,10 +308,10 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
           </AnimatePresence>
         </Box>
 
-        {/* About with enhanced animation */}
+        {/* About */}
         <Typography
           component={motion.p}
-          variant="h6"
+          variant="body1"
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.7, ease: "easeOut" }}
@@ -337,8 +320,9 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
             fontWeight: 300,
             maxWidth: 600,
             mx: "auto",
-            lineHeight: 1.6,
+            lineHeight: 1.7,
             color: "text.secondary",
+            fontSize: { xs: "1rem", md: "1.1rem" },
           }}
         >
           I'm a passionate developer from India with a{" "}
@@ -347,21 +331,22 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
           to create scalable and impactful digital solutions.
         </Typography>
 
+        {/* Skills */}
         <Box
           sx={{
             display: "flex",
-            gap: 1,
+            gap: 1.5,
             justifyContent: "center",
             flexWrap: "wrap",
-            mb: 4,
+            mb: 5,
           }}
         >
           {[
             { skill: "React", icon: <SiReact /> },
-            { skill: "TypeScript", icon: <Code /> },
+            { skill: "TypeScript", icon: <SiTypescript /> },
             { skill: "React Native", icon: <MdPhoneIphone /> },
             { skill: "Next.js", icon: <SiNextdotjs /> },
-            { skill: "JavaScript", icon: <Code /> },
+            { skill: "JavaScript", icon: <SiJavascript /> },
             { skill: "UI/UX", icon: <DesignServices /> },
             { skill: "Material UI", icon: <Code /> },
           ].map((item, i) => (
@@ -376,13 +361,13 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
                 icon={item.icon}
                 label={item.skill}
                 sx={{
-                  background: "rgba(255,255,255,0.1)",
-                  color: "text.secondary",
+                  background: alpha(theme.palette.primary.main, 0.1),
+                  color: "text.primary",
                   backdropFilter: "blur(10px)",
-                  border: "1px solid rgba(255,255,255,0.2)",
+                  border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
                   py: 1,
                   "&:hover": {
-                    background: "rgba(255,255,255,0.2)",
+                    background: alpha(theme.palette.primary.main, 0.2),
                     transform: "translateY(-2px)",
                   },
                   transition: "all 0.3s ease",
@@ -392,7 +377,7 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
           ))}
         </Box>
 
-        {/* Buttons with enhanced animation */}
+        {/* Buttons */}
         <Box
           component={motion.div}
           initial={{ y: 50, opacity: 0 }}
@@ -415,13 +400,16 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
             sx={{
               px: 4,
               py: 1.5,
-              background: "linear-gradient(45deg, #6366F1, #818CF8)",
+              background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
               borderRadius: 2,
               fontWeight: 600,
-              boxShadow: "0 4px 14px rgba(99, 102, 241, 0.4)",
+              boxShadow: `0 4px 14px ${alpha(theme.palette.primary.main, 0.4)}`,
               "&:hover": {
-                boxShadow: "0 6px 20px rgba(99, 102, 241, 0.6)",
-                background: "linear-gradient(45deg, #818CF8, #A5B4FC)",
+                boxShadow: `0 6px 20px ${alpha(
+                  theme.palette.primary.main,
+                  0.6
+                )}`,
+                background: `linear-gradient(45deg, ${theme.palette.primary.dark}, ${theme.palette.secondary.dark})`,
               },
             }}
             whileHover={{ scale: 1.05 }}
@@ -440,15 +428,18 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
               py: 1.5,
               borderWidth: 2,
               borderRadius: 2,
-              color: "text.secondary",
-              borderColor: "text.secondary",
+              color: "text.primary",
+              borderColor: "primary.main",
               fontWeight: 600,
               backdropFilter: "blur(10px)",
-              background: "rgba(255,255,255,0.1)",
+              background: alpha(theme.palette.background.paper, 0.7),
               "&:hover": {
                 borderWidth: 2,
-                backgroundColor: "rgba(255,255,255,0.2)",
-                boxShadow: "0 4px 14px rgba(255, 255, 255, 0.2)",
+                backgroundColor: alpha(theme.palette.primary.main, 0.1),
+                boxShadow: `0 4px 14px ${alpha(
+                  theme.palette.primary.main,
+                  0.2
+                )}`,
               },
             }}
             whileHover={{ scale: 1.05 }}
@@ -458,13 +449,19 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
           </Button>
         </Box>
 
-        {/* Social Links with enhanced animation */}
+        {/* Social Links */}
         <Box
           component={motion.div}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.7 }}
-          sx={{ display: "flex", gap: 2, justifyContent: "center", pb: 10 }}
+          sx={{
+            display: "flex",
+            gap: 2,
+            justifyContent: "center",
+            pb: 10,
+            mb: { xs: 1 },
+          }}
         >
           {[
             {
@@ -498,12 +495,12 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
               whileHover={{ scale: 1.1, y: -5 }}
               whileTap={{ scale: 0.9 }}
               sx={{
-                color: "text.secondary",
-                background: "rgba(255,255,255,0.1)",
-                border: "1px solid rgba(255,255,255,0.2)",
+                color: "primary.main",
+                background: alpha(theme.palette.background.paper, 0.7),
+                border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
                 backdropFilter: "blur(10px)",
                 "&:hover": {
-                  background: "rgba(255,255,255,0.2)",
+                  background: alpha(theme.palette.primary.main, 0.1),
                 },
               }}
             >
@@ -511,44 +508,6 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
             </IconButton>
           ))}
         </Box>
-      </Box>
-
-      <Box
-        component={motion.div}
-        animate={{ opacity: isPulsing ? 1 : 0.5 }}
-        transition={{ duration: 0.5 }}
-        sx={{
-          position: "absolute",
-          bottom: 40,
-          left: "50%",
-          transform: "translateX(-50%)",
-          cursor: "pointer",
-          zIndex: 2,
-          display: {
-            xs: "flex",
-            md: "none",
-          },
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-        onClick={() => setCurrentPage("about")}
-        whileHover={{ scale: 1.1 }}
-      >
-        <Typography variant="body2" sx={{ mb: 1, color: "text.secondary" }}>
-          Learn more about me
-        </Typography>
-        <KeyboardArrowDown
-          sx={{
-            fontSize: 40,
-            animation: "bounce 2s infinite",
-            color: "text.secondary",
-            "@keyframes bounce": {
-              "0%, 20%, 50%, 80%, 100%": { transform: "translateY(0)" },
-              "40%": { transform: "translateY(-10px)" },
-              "60%": { transform: "translateY(-5px)" },
-            },
-          }}
-        />
       </Box>
     </Box>
   );
