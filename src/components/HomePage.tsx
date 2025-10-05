@@ -29,6 +29,7 @@ import {
   SiJavascript,
 } from "react-icons/si";
 import { MdPhoneIphone } from "react-icons/md";
+import Earth3D from "./Earth3D";
 
 interface HomePageProps {
   setCurrentPage: (page: Page) => void;
@@ -507,6 +508,7 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
           ))}
         </Box>
       </Box>
+      <Earth3D/>
     </Box>
   );
 };
