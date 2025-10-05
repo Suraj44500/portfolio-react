@@ -1,16 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import Globe from "react-globe.gl";
-
-interface GlobeRef {
-  controls: () => { autoRotate: boolean; autoRotateSpeed: number };
-  pointOfView: (
-    coords: { lat: number; lng: number; altitude: number },
-    duration?: number
-  ) => void;
-}
+import type { GlobeMethods } from "react-globe.gl";
 
 const Earth3D = () => {
-  const globeEl = useRef<GlobeRef | null>(null);
+  const globeEl = useRef<GlobeMethods | undefined>(undefined);
+
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -111,8 +105,8 @@ const Earth3D = () => {
         labelColor={() => "rgba(255,255,255,0.95)"}
         labelResolution={2}
         labelAltitude={0.035}
-        labelStrokeColor="rgba(0,0,0,0.6)"
-        labelStrokeWidth={0.3}
+        // labelStrokeColor="rgba(0,0,0,0.6)"
+        // labelStrokeWidth={0.3}
         arcsData={arcsData}
         arcStartLat="startLat"
         arcStartLng="startLng"
