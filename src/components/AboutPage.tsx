@@ -392,7 +392,7 @@ performance-focused solutions.
             }}
           >
             {[
-              { value: "2+", label: "Years Experience" },
+              { value: "3+", label: "Years Experience" },
               { value: "10+", label: "Projects Completed" },
               { value: "15+", label: "Technologies" },
             ].map((stat, index) => (
