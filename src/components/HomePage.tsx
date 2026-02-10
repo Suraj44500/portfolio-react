@@ -325,7 +325,7 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage }) => {
           }}
         >
           I'm a passionate developer from India with a{" "}
-          <strong>B.Voc in Software Development (7.8 CGPA)</strong>. I have 3+
+          <strong>B.Voc in Software Development (8.8 CGPA)</strong>. I have 3+
           years of web development experience, working with modern technologies
           to create scalable and impactful digital solutions.
         </Typography>
