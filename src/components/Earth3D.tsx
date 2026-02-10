@@ -34,24 +34,37 @@ const Earth3D = () => {
       color: "#ffffff",
     },
     { name: "Dubai, Evtaar", lat: 25.2048, lng: 55.2708, color: "#ffffff" },
+    {
+    name: "Ceuta, Spain — Nexus SP",
+    lat: 35.8894,
+    lng: -5.3213,
+    color: "#ffffff",
+  },
   ];
 
   const arcsData = [
-    {
-      startLat: cities[0].lat,
-      startLng: cities[0].lng,
-      endLat: cities[1].lat,
-      endLng: cities[1].lng,
-      color: ["#00bfff", "#00bfff"],
-    },
-    {
-      startLat: cities[1].lat,
-      startLng: cities[1].lng,
-      endLat: cities[2].lat,
-      endLng: cities[2].lng,
-      color: ["#00bfff", "#00bfff"],
-    },
-  ];
+  {
+    startLat: cities[0].lat,
+    startLng: cities[0].lng,
+    endLat: cities[1].lat,
+    endLng: cities[1].lng,
+    color: ["#00bfff", "#00bfff"],
+  },
+  {
+    startLat: cities[1].lat,
+    startLng: cities[1].lng,
+    endLat: cities[2].lat,
+    endLng: cities[2].lng,
+    color: ["#00bfff", "#00bfff"],
+  },
+  {
+    startLat: cities[2].lat,
+    startLng: cities[2].lng,
+    endLat: cities[3].lat, 
+    endLng: cities[3].lng,
+    color: ["#00bfff", "#00bfff"],
+  },
+];
 
   useEffect(() => {
     if (globeEl.current) {
