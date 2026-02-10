@@ -84,22 +84,35 @@ const AboutPage: React.FC = () => {
   ];
 
   const skillsData = {
-    frontend: [
-      { name: "React", level: 90 },
-      { name: "React Native", level: 80 },
-      { name: "Next.js", level: 85 },
-      { name: "TypeScript", level: 80 },
-      { name: "JavaScript", level: 95 },
-      { name: "HTML5/CSS3", level: 95 },
-      { name: "Material-UI", level: 80 },
-      { name: "Tailwind CSS", level: 75 },
-    ],
-    backend: [
-      { name: "Nest.js", level: 75 },
-      { name: "Express.js", level: 80 },
-      { name: "PostgreSQL", level: 85 },
-      { name: "RESTful APIs", level: 90 },
-    ],
+   frontend: [
+  { name: "React", level: 90 },
+  { name: "Next.js", level: 85 },
+  { name: "React Native", level: 80 },
+  { name: "Angular", level: 70 },
+  { name: "Redux", level: 80 },
+  { name: "TypeScript", level: 80 },
+  { name: "JavaScript", level: 95 },
+  { name: "HTML5/CSS3", level: 95 },
+  { name: "Material-UI", level: 80 },
+  { name: "Tailwind CSS", level: 75 },
+],
+
+ backend: [
+  { name: "Node.js", level: 85 },
+  { name: "NestJS", level: 80 },
+  { name: "Go", level: 70 },
+  { name: "Django", level: 70 },
+  { name: "FastAPI", level: 75 },
+  { name: ".NET Core", level: 65 },
+  { name: "REST APIs", level: 90 },
+  { name: "PostgreSQL", level: 85 },
+  { name: "MongoDB", level: 80 },
+  { name: "MySQL", level: 75 },
+  { name: "Docker", level: 70 },
+  { name: "Firebase", level: 75 },
+  { name: "Git", level: 90 },
+],
+
     soft: [
       { name: "Problem Solving", level: 90 },
       { name: "Team Collaboration", level: 85 },
@@ -110,47 +123,56 @@ const AboutPage: React.FC = () => {
     ],
   };
 
-  const experiences = [
-    {
-      role: "Frontend Developer intern",
-      company: "Encrobytes",
-      period: "sep 2023 - jun 2024 | Faridabad, IN",
-      achievements: [
-        "Developed responsive web pages using React and MUI",
-        "Implemented reusable components and optimized frontend performance",
-        "Collaborated with backend developers to integrate REST APIs",
-        "Participated in code reviews and agile sprint meetings to improve project delivery",
-      ],
-    },
-    {
-      role: "Senior Frontend Developer",
-      company: "People Maketh",
-      period: "jul 2024 - jun 2025 | Bangalore, IN",
-      achievements: [
-        "Worked on 3 projects from scratch till production deployment",
-        "Created reusable components used across multiple projects",
-        "Collaborated with a team of 5+ frontend developers ensuring smooth delivery",
-      ],
-    },
-    {
-      role: "Senior Frontend Developer",
-      company: "Evtaar",
-      period: "Jun 2025 - Present | United Arab Emirates",
-      achievements: [
-        "Building an all-in-one B2B platform for businesses",
-        "Designed and implemented reusable frontend components for multiple modules",
-        "Collaborated with a team of 10+ frontend and backend developers to deliver scalable solutions",
-        "Integrated dashboards, analytics, and workflow management tools into the platform",
-      ],
-    },
-  ];
+ const experiences = [
+  {
+    role: "Frontend Developer Intern",
+    company: "Encrobytes",
+    period: "Feb 2023 - Jul 2023 | On-site, Faridabad, IN",
+    achievements: [
+      "Focused on UI development and responsive design using HTML, CSS, and JavaScript",
+      "Built and maintained user-friendly frontend interfaces",
+      "Ensured cross-browser compatibility and mobile responsiveness",
+    ],
+  },
+  {
+    role: "Full Stack Engineer",
+    company: "People Maketh",
+    period: "Aug 2023 - May 2025 | Remote, IN",
+    achievements: [
+      "Managed end-to-end full stack development for multiple projects",
+      "Integrated third-party APIs and handled backend logic",
+      "Worked on database design and optimization",
+      "Collaborated closely with cross-functional teams to deliver features",
+    ],
+  },
+  {
+    role: "Software Engineer",
+    company: "Evtaar",
+    period: "Jun 2025 - Jan 2026 | Remote, UAE",
+    achievements: [
+      "Developed and maintained core application features using React and Go",
+      "Optimized application performance and improved scalability",
+      "Collaborated with frontend and backend teams to deliver robust solutions",
+    ],
+  },
+  {
+    role: "Full-stack Developer",
+    company: "Nexus SP Solutions",
+    period: "Dec 2025 - Present | Freelance",
+    achievements: [
+      "Independently developed full-stack eCommerce solutions",
+      "Designed complete application architecture using Next.js, NestJS, and PostgreSQL",
+      "Handled API integrations and database management end-to-end",
+    ],
+  },
+];
 
   const education = [
     {
       degree: "B.Voc (Software Development)",
-      institution: "Maharishi Dayanand University",
+      institution: "Aggarwal College, Ballabgarh",
       period: "2022 - 2025 | Haryana, India",
-      details: "Graduated with 7.8 CGPA in Software Development",
+      details: "Graduated with 8.8 CGPA in Software Development",
     },
     {
       degree: "Higher Secondary Education",
@@ -357,9 +379,9 @@ const AboutPage: React.FC = () => {
             sx={{ maxWidth: 800, mx: "auto", mb: 4, color: "text.secondary" }}
           >
             I am a dedicated full-stack developer with a passion for building
-            robust and scalable applications. With over 2.5 years of experience,
-            I specialize in creating seamless digital experiences that combine
-            aesthetic appeal with technical excellence.
+            robust and scalable applications.With over 3 years of experience, I specialize in building scalable web
+applications and robust backend systems with clean architecture and
+performance-focused solutions.
           </Typography>
           <Box
             sx={{
